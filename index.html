@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Excuse Letter Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#letterForm">Skip to form</a>
+
+  <main class="page-shell">
+    <section class="hero" aria-labelledby="pageTitle">
+      <div class="brand-row">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32">
+            <path class="mark-fill" d="M9 5.5h11.3L25 10.2v16.3H9V5.5Z"></path>
+            <path d="M20 5.5v5h5M13 15h8M13 19h8M13 23h5"></path>
+          </svg>
+        </div>
+
+        <div>
+          <p class="eyebrow">School document tool</p>
+          <h1 id="pageTitle">Student Excuse Letter Generator</h1>
+        </div>
+      </div>
+
+      <p class="hero-copy">
+        Create a formal excuse letter by entering the student details, absence information, and guardian information.
+      </p>
+
+      <div class="hero-actions">
+        <a class="primary-link" href="#letterForm">Start creating</a>
+        <button class="secondary-button" type="button" id="loadSampleButton">Load sample</button>
+      </div>
+    </section>
+
+    <section class="flow-section" aria-labelledby="flowTitle">
+      <div class="section-heading">
+        <p class="eyebrow">System flow</p>
+        <h2 id="flowTitle">How the generator works</h2>
+      </div>
+
+      <ol class="flow-list">
+        <li>
+          <span class="flow-number">1</span>
+          <div>
+            <strong>Fill out the form</strong>
+            <p>Enter student, absence, letter, and guardian details.</p>
+          </div>
+        </li>
+        <li>
+          <span class="flow-number">2</span>
+          <div>
+            <strong>Validate required fields</strong>
+            <p>The system checks missing details before creating the letter.</p>
+          </div>
+        </li>
+        <li>
+          <span class="flow-number">3</span>
+          <div>
+            <strong>Generate and review</strong>
+            <p>JavaScript builds the letter and displays a clean preview.</p>
+          </div>
+        </li>
+        <li>
+          <span class="flow-number">4</span>
+          <div>
+            <strong>Copy, print, or download</strong>
+            <p>Use the final letter in Word, email, Messenger, or printed form.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="workspace" aria-label="Letter generator workspace">
+      <form class="form-panel" id="letterForm" novalidate>
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Letter form</p>
+            <h2>Enter letter details</h2>
+          </div>
+          <p class="status-pill" id="draftStatus">Draft not saved</p>
+        </div>
+
+        <fieldset>
+          <legend>Student information</legend>
+
+          <div class="field-grid">
+            <div class="form-field">
+              <label for="studentName">Student name</label>
+              <input id="studentName" name="studentName" type="text" autocomplete="name" required />
+              <p class="error-text" data-error-for="studentName"></p>
+            </div>
+
+            <div class="form-field">
+              <label for="gradeSection">Grade and section</label>
+              <input id="gradeSection" name="gradeSection" type="text" placeholder="Grade 10, Section A" required />
+              <p class="error-text" data-error-for="gradeSection"></p>
+            </div>
+
+            <div class="form-field">
+              <label for="schoolName">School name</label>
+              <input id="schoolName" name="schoolName" type="text" placeholder="Optional" />
+            </div>
+
+            <div class="form-field">
+              <label for="teacherName">Teacher name</label>
+              <input id="teacherName" name="teacherName" type="text" placeholder="Ma'am or Sir" required />
+              <p class="error-text" data-error-for="teacherName"></p>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Absence information</legend>
+
+          <div class="field-grid">
+            <div class="form-field">
+              <label for="letterDate">Date today</label>
+              <input id="letterDate" name="letterDate" type="date" required />
+              <p class="error-text" data-error-for="letterDate"></p>
+            </div>
+
+            <div class="form-field">
+              <label for="absenceStart">Date of absence</label>
+              <input id="absenceStart" name="absenceStart" type="date" required />
+              <p class="error-text" data-error-for="absenceStart"></p>
+            </div>
+
+            <div class="form-field">
+              <label for="absenceEnd">End date if multiple days</label>
+              <input id="absenceEnd" name="absenceEnd" type="date" />
+              <p class="error-text" data-error-for="absenceEnd"></p>
+            </div>
+
+            <div class="form-field">
+              <label for="reason">Reason for absence</label>
+              <select id="reason" name="reason" required>
+                <option value="">Select reason</option>
+                <option value="sickness">Sickness</option>
+                <option value="medicalAppointment">Medical appointment</option>
+                <option value="familyEmergency">Family emergency</option>
+                <option value="importantFamilyMatter">Important family matter</option>
+                <option value="transportationProblem">Transportation problem</option>
+                <option value="badWeather">Bad weather</option>
+                <option value="others">Others</option>
+              </select>
+              <p class="error-text" data-error-for="reason"></p>
+            </div>
+
+            <div class="form-field is-hidden" id="otherReasonGroup">
+              <label for="otherReason">Other reason</label>
+              <input id="otherReason" name="otherReason" type="text" />
+              <p class="error-text" data-error-for="otherReason"></p>
+            </div>
+
+            <div class="form-field span-all">
+              <label for="extraDetails">Supporting detail</label>
+              <textarea id="extraDetails" name="extraDetails" rows="4" placeholder="Optional details, such as doctor's advice or situation explanation"></textarea>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Letter settings</legend>
+
+          <div class="field-grid">
+            <div class="form-field">
+              <label for="writerType">Written by</label>
+              <select id="writerType" name="writerType">
+                <option value="student">Student</option>
+                <option value="parent">Parent or guardian</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="letterTone">Letter tone</label>
+              <select id="letterTone" name="letterTone">
+                <option value="formal">Formal</option>
+                <option value="simple">Simple</option>
+                <option value="respectful">Respectful</option>
+              </select>
+            </div>
+
+            <label class="checkbox-field span-all" for="includeCatchUp">
+              <input id="includeCatchUp" name="includeCatchUp" type="checkbox" checked />
+              <span>Include a promise to catch up with missed lessons and activities.</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Guardian information</legend>
+
+          <div class="field-grid">
+            <div class="form-field">
+              <label for="guardianName">Parent or guardian name</label>
+              <input id="guardianName" name="guardianName" type="text" required />
+              <p class="error-text" data-error-for="guardianName"></p>
+            </div>
+
+            <div class="form-field">
+              <label for="contactNumber">Contact number</label>
+              <input id="contactNumber" name="contactNumber" type="tel" placeholder="Optional" />
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="form-actions">
+          <button class="primary-button" type="submit">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"></path>
+            </svg>
+            Generate letter
+          </button>
+
+          <button class="secondary-button" type="button" id="saveDraftButton">
+            Save draft
+          </button>
+
+          <button class="quiet-button" type="button" id="clearFormButton">
+            Clear form
+          </button>
+        </div>
+      </form>
+
+      <aside class="preview-panel" aria-labelledby="previewTitle">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Preview</p>
+            <h2 id="previewTitle">Generated excuse letter</h2>
+          </div>
+          <p class="status-pill" id="wordCount">0 words</p>
+        </div>
+
+        <article class="letter-paper" id="letterPreview">
+          <p class="placeholder-text">
+            Your generated letter will appear here after you complete the form and select Generate letter.
+          </p>
+        </article>
+
+        <div class="preview-actions">
+          <button class="secondary-button" type="button" id="copyButton" disabled>
+            Copy letter
+          </button>
+          <button class="secondary-button" type="button" id="printButton" disabled>
+            Print letter
+          </button>
+          <button class="secondary-button" type="button" id="downloadButton" disabled>
+            Download text
+          </button>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <section class="print-area" id="printArea" aria-hidden="true"></section>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
